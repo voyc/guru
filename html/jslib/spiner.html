@@ -1,0 +1,54 @@
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>
+	<title>Spin</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+	<meta equiv='X-UA-Compatible' content='IE=8'> <!-- for ie8 drag-n-drop bug -->
+
+	<style>
+		#c1 {
+			height:30px;
+			width:30px;
+		}
+		#c2 {
+			height:400px;
+			width:400px;
+		}
+		.spinning {
+			animation: rotate-left 1.2s linear infinite;
+		}
+		@keyframes rotate-left {
+		  from { transform: rotate(0deg);}
+		  to {transform: rotate(360deg);}
+		}
+	</style>
+
+	<script src='spinner.js'></script>
+	<script src='utils.js'></script>
+
+	<script>
+		var spinner1 = null;
+		var spinner2 = null;
+
+		onload = function() {
+			spinner1 = new Spinner(document.getElementById('c1'));
+			spinner1.draw();
+
+			spinner2 = new Spinner(document.getElementById('c2'));
+			spinner2.draw();
+		}
+	</script>
+</head>
+<body>
+	<div>
+		<canvas id="c1"></canvas><br/><br/>
+		<button onclick='spinner1.spin()'>Spin</button>
+		<button onclick='spinner1.stop()'>Stop</button>
+	</div>
+	<div>
+		<canvas id="c2"></canvas><br/><br/>
+		<button onclick='spinner2.spin()'>Spin</button>
+		<button onclick='spinner2.stop()'>Stop</button>
+	</div>
+</body>
+</html>

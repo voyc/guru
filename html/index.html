@@ -1,0 +1,108 @@
+<html>
+<head>
+<meta http-equiv='content-type' content='text/html; charset=UTF-8'/>
+<title>Guru</title>
+<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+<meta equiv='X-UA-Compatible' content='IE=8'> <!-- for ie8 drag-n-drop bug -->
+
+<style>
+html, body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	padding:0px;
+	margin:0px;
+}
+#full {
+	position:fixed;
+	width:100%;
+	height:100%;
+}
+#guru {
+	padding:10px;
+	position:fixed;
+	max-width:15cm;
+}
+#gobutton {
+	float:left;
+	width:30px;
+	height:30px;
+}
+#retrycanvas {
+	width:100%;
+	height:100%;
+}
+#b {
+	text-align:right;
+}
+#mdash {
+	display:none;
+}
+
+/* typography */
+#q {
+	font-size:120%;
+}
+#w {
+	font-style:italic;
+}
+
+/* required by Spinner */
+.spinning {
+	animation: rotate-left 1.2s linear infinite;
+}
+@keyframes rotate-left {
+  from { transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+</style>
+<script src='jslib/comm.js'></script>
+<script src='jslib/utils.js'></script>
+<script src='jslib/spinner.js'></script>
+<script>
+	var comm = null;
+	var spinner = null;
+	onload = function() {
+		comm = new Comm('http://guru.voyc.com/svc/');
+		layout();
+		spinner = new Spinner(document.getElementById('retrycanvas'));
+		spinner.draw();
+		go();
+	}
+	go = function() {
+		spinner.spin();
+		comm.request('getwisdom', '', function(ok,response,o) {
+			if (ok) {
+				document.getElementById('q').innerHTML = response.q;
+				document.getElementById('w').innerHTML = response.w;
+				document.getElementById('a').innerHTML = response.a;
+				document.getElementById('mdash').style.display = 'inline';
+				layout();
+			}
+			spinner.stop();
+		});
+	}
+	onresize = function() {
+		layout();
+	}
+	layout = function() {
+		center('guru', 'full');
+	}
+</script>
+</head>
+<body>
+	<div id='full'>
+		<div id='guru'>
+			<div id='q'></div>
+			<div id='b'>
+				<div id='gobutton' onclick='go()'>
+					<canvas id='retrycanvas'></canvas>
+				</div>
+				<span id='mdash'>&mdash;</span>
+				<span id='a'></span><br/>
+				<span id='w'></span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
