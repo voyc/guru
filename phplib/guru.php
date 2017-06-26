@@ -37,7 +37,7 @@ function doGetWisdom() {
 		return $a;
 	}
 	
-	$highkey = 540;
+	$highkey = 553;
 	$r = intval((rand(1, 100) * $highkey) / 100);
 	$result = @pg_execute($conn, $name, array($r));
 	if (!$result) {
