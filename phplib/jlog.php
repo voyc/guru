@@ -34,6 +34,7 @@ function openjlog($sourcefile) {
 function jlog($severity, $msg) {
 	global $jlog_sourcefile;
 	global $jlog_logfile, $jlog_email;
+	global $a;
 
 	// format the message
 	$m = date(DATE_RFC2822) . ' ' . $a[$severity] . ',' . $jlog_sourcefile . ' ' . $msg . "\n";
